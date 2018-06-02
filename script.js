@@ -166,17 +166,18 @@ function formatLinksBetweenCombos(onlyunderlying) {
 
 // Запуск KeyLines
 $(function () {
-    
+
+    $("#ex1").slider();
+
     KeyLines.paths({ 
-        assets: 'assets/',
+        assets: 'lib/KeyLines/assets/',
         flash: { 
-            swf: 'swf/keylines.swf', 
-            swfObject: 'js/swfobject.js', 
-            expressInstall: 'swf/expressInstall.swf' 
+            swf: 'lib/KeyLines/swf/keylines.swf', 
+            swfObject: 'lib/KeyLines/js/swfobject.js', 
+            expressInstall: 'lib/KeyLines/swf/expressInstall.swf' 
         }
     });
   
     KeyLines.create( 'kl', chartLoaded);
 });
-
 

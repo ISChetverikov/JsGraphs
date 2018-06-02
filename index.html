@@ -1,35 +1,47 @@
 <html>
 <head>
-<script src="lib/KeyLines/js/keylines.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" href="lib/KeyLines/css/keylines.css">
-<script src="script.js"></script>
+
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="lib/KeyLines/js/keylines.js"></script>
+    <link rel="stylesheet" type="text/css" href="lib/KeyLines/css/keylines.css">
+
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap-slider-master/dist/css/bootstrap-slider.min.css">
+    <script src="lib/bootstrap-slider-master/dist/bootstrap-slider.min.js"></script>
+    <script src="script.js"></script>
+
 </head>
-<body>
-<div class="container" >
-      <div id="title_container" class="col-md-12" style=" padding: 10px; border-bottom: 1px ridge gray;" >
-        <h2 id="title">Граф связи персонажей Les Miserables</h2>
-      </div>
-      <div class="row">
-        <div id="lhs" class="col-md-8" style=" height: 550px; padding-right: 0px; border-right: 1px ridge gray;">
-          
-            <div id="kl" style="width: 100%; height: 100%;"></div>
-       
+    <body>
+    <div class="container" >
+          <div id="title_container" class="col-md-12" style=" padding: 10px; border-bottom: 1px ridge gray;" >
+            <h2 id="title">Граф связи персонажей Les Miserables</h2>
+          </div>
+          <div class="row">
+            <div id="lhs" class="col-md-8" style=" height: 550px; padding-right: 0px; border-right: 1px ridge gray;">
+
+                <div id="kl" style="width: 100%; height: 100%;"></div>
+
+            </div>
+            <div id="rhs" class="col-md-4" style="height: 550px;">
+                  <form autocomplete="off" id="rhsForm">
+                      <fieldset style="margin-top: 10px">
+                          <legend>Опции</legend>
+                          <label class="checkbox">
+                              <input id="onlyunderlying" style="margin: 10px;" type="checkbox"><p>Не скрывать групповые связи</p>
+                          </label>
+                          <label class="slider">
+                              <p>Выделить наиболее важных персонажей:</p>
+                              <input id="ex1" data-slider-id='ex1Slider' style="background: #BABABA;" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14" />
+                          </label>
+                      </fieldset>
+                  </form>
+
+            </div>
+            <div class="clearfix"></div>
+          </div>
         </div>
-        <div id="rhs" class="col-md-4" style="height: 550px;">
-              <form autocomplete="off" id="rhsForm">
-                  <fieldset style="margin-top: 10px">
-                    <legend>Количество наиболее важных персонажей</legend>
-                    <label class="checkbox">
-                      <input id="onlyunderlying" type="checkbox">Only show underlying links
-                    </label>
-                  </fieldset>
-              </form>
-            
-        </div>
-        <div class="clearfix"></div>
-      </div>
-    </div>
- </body>
-</html>
+     </body>
+    </html>
