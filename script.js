@@ -86,7 +86,7 @@ function afterLoad(groupsDefn) {
   //chart.layout();
   chart.combo().combine(
         groupsDefn,
-        { animate: true, select: false, arrange: 'concentric' },
+        { animate: false, select: false, arrange: 'concentric' },
          function (comboIds) {
           // Style the combo links
           var comboLinks = chart.graph().neighbours(comboIds).links;
@@ -167,7 +167,8 @@ function formatLinksBetweenCombos(onlyunderlying) {
 // Запуск KeyLines
 $(function () {
 
-    $("#ex1").slider();
+    $("#ex1").bootstrapSlider();
+    $(".slider-selection").css('background', '#BABABA');
 
     KeyLines.paths({ 
         assets: 'lib/KeyLines/assets/',
