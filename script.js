@@ -10,8 +10,9 @@ var black = 'rgb(0, 0, 0)';
 var chart = [];
 var graphEngine;
 var linkIds = [];
+var topTen = [];
 
-// Загрузка узлов и ребер из объекта JSON
+// Загрузка узлов и ребер из объекта JSON, формирование групп
 function ParseJSONData (obj) {
     var chartData ={
         type: 'LinkChart',
@@ -43,23 +44,38 @@ function ParseJSONData (obj) {
             };
         groupsDefn[node.group].ids.push(id);
     }
-      
+
+
     for  (var j = 0; j < obj.links.length; j++) {
         var link = obj.links[j];
         var linkId = "link" + j;
+        var linkSource = "node" + link.source;
+        var linkTarget = "node" + link.target;
+
         linkIds[j] = linkId;
-        
+        // Считаем сколько ребер у вершин
+        (found = topTen.find(x => x.name == linkSource)) === undefined ?
+            topTen.push({ name: linkSource, value: 1 }) :
+            found.value++;
+        (found = topTen.find(x => x.name == linkTarget)) === undefined ?
+            topTen.push({ name: linkTarget, value: 1 }) :
+            found.value++;
+
         chartData.items.push ({
             id: linkId,
             type: 'link',
-            id1: "node"+link.source,
-            id2: "node"+link.target,
+            id1: linkSource,
+            id2: linkTarget,
             w: link.value,
             a1: true,
             a2: true
         });
     }
-      
+
+    // Опеределяем 10 вершин с наибольшим количеством ребер
+    topTen.sort((x, y) => { return y.value - x.value; });
+    topTen = topTen.slice(0, 10);
+    
     chart.load(chartData, function(){
         afterLoad(groupsDefn);
     });   
@@ -82,21 +98,22 @@ function chartLoaded(err, loadedChart) {
 
 // Действия после загрузки
 function afterLoad(groupsDefn) {
-  console.log(groupsDefn);
-  //chart.layout();
+  
   chart.combo().combine(
         groupsDefn,
-        { animate: false, select: false, arrange: 'concentric' },
-         function (comboIds) {
-          // Style the combo links
-          var comboLinks = chart.graph().neighbours(comboIds).links;
-          chart.setProperties(comboLinks.map(function (id) {
+        {
+            animate: false,
+            select: false,
+            arrange: 'concentric'
+        },
+        function (comboIds) {
+        // Style the combo links
+        var comboLinks = chart.graph().neighbours(comboIds).links;
+        chart.setProperties(comboLinks.map(function (id) {
             return { id: id, w: '6', ls: 'dashed' };
-          }), false, chart.layout);
+        }), false, chart.layout);
     }
   );
-    
-  // Setup UI
   $('#onlyunderlying').click(function () {
     formatLinksBetweenCombos($(this).is(':checked'));
   });
@@ -105,8 +122,9 @@ function afterLoad(groupsDefn) {
 }
 
 function revealNeighbours() {
-  // Get the current state
+    
   var ids = chart.selection();
+
   var onlyUnderlying = $('#onlyunderlying').is(':checked');
   graphEngine.load(chart.serialize());
   if (ids.length > 0) {
@@ -169,6 +187,14 @@ $(function () {
 
     $("#ex1").bootstrapSlider();
     $(".slider-selection").css('background', '#BABABA');
+    $("#ex1").on("change", function (slideEvt) {
+
+        console.log(topTen);
+        chart.selection(topTen.slice(0, slideEvt.value.newValue)
+            .map(x => x.name));
+        
+        revealNeighbours();
+    });
 
     KeyLines.paths({ 
         assets: 'lib/KeyLines/assets/',
