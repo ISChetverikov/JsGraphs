@@ -12,6 +12,9 @@ var graphEngine;
 var linkIds = [];
 var topTen = [];
 
+var height = 0;
+var width = 0;
+
 // Загрузка узлов и ребер из объекта JSON, формирование групп
 function ParseJSONData (obj) {
     var chartData ={
@@ -182,14 +185,37 @@ function formatLinksBetweenCombos(onlyunderlying) {
   });
 }
 
+function resize(isFullScreen) {
+    
+    if (isFullScreen) {
+        height = $('#fullScreen').height();
+        width = $('#fullScreen').width();
+
+        console.log(width);
+        KeyLines.setSize('kl', screen.width, screen.height);
+        // Hide the button in fullscreen mode
+        $('#fsBtn').hide();
+    } else {
+        KeyLines.setSize('kl', width, height);
+        $('#fsBtn').show();
+    }
+    // After resize, fit the chart to the window
+    fitChartWithDelay();
+}
+
+function fitChartWithDelay() {
+    setTimeout(function () {
+        chart.zoom('fit', { animate: true, time: 300 });
+    }, 200);
+}
+
 // Запуск KeyLines
 $(function () {
 
     $("#ex1").bootstrapSlider();
     $(".slider-selection").css('background', '#BABABA');
     $("#ex1").on("change", function (slideEvt) {
-
-        console.log(topTen);
+        
         chart.selection(topTen.slice(0, slideEvt.value.newValue)
             .map(x => x.name));
         
@@ -205,6 +231,12 @@ $(function () {
         }
     });
   
-    KeyLines.create( 'kl', chartLoaded);
+    KeyLines.create('kl', chartLoaded);
+
+    $('#fsBtn').click(function (evt) {
+        if (KeyLines.fullScreenCapable()) {
+            KeyLines.toggleFullScreen(document.getElementById('fullScreen'), resize);
+        }
+    });
 });
 

@@ -20,10 +20,10 @@
             <h2 id="title">Граф связи персонажей Les Miserables</h2>
           </div>
           <div class="row">
-            <div id="lhs" class="col-md-8" style=" height: 550px; padding-right: 0px; border-right: 1px ridge gray;">
-
-                <div id="kl" style="width: 100%; height: 100%;"></div>
-
+              <div id="lhs" class="col-md-8" style=" height: 550px; padding-right: 0px; border-right: 1px ridge gray;">
+                  <div id='fullScreen'>
+                      <div id="kl" style="width: 100%; height: 100%;"></div>
+                  </div>
             </div>
             <div id="rhs" class="col-md-4" style="height: 550px;">
                 <form id="rhsForm">
@@ -33,15 +33,18 @@
                         <label style="margin-left: 5px;">Показать все связи</label>
                     </div>
                     <div class="form-group" style="padding: 10px;">
-                        <label >Выделить наиболее важных персонажей:</label>
+                        <label>Выделить наиболее важных персонажей:</label>
                         <input id="ex1" type="text" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="0" />
 
+                    </div>
+                    <div>
+                        <button type="button" id="fsBtn" class="btn btn-primary">Full Screen</button>
                     </div>
                 </form>
 
             </div>
             <div class="clearfix"></div>
-          </div>
+        </div>
         </div>
      </body>
     </html>
